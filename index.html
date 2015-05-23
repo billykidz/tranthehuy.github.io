@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<title>My new game</title>
+	<style type="text/css">
+	body{
+		font-family:   'Helvetica Neue', Helvetica, Arial,sans-serif;
+		background: #E4F1FE;
+		background-image: url("bg.jpg");
+		background-size: 100% 100%;
+		text-align: center;
+	}
+	.board{
+		margin: 0 auto;
+		padding: 0;
+		display: block;
+		width: 250px;
+		height: 400px;
+		background-color: #A2DED0;
+		line-height:0;
+		overflow: hidden;
+	}
+
+	.block{
+		margin: 0;
+		padding: 0;
+		display: inline-block;
+		width: 23px;
+		height: 23px;
+		background-color: white;
+		border: 1px solid #F5D76E;
+		opacity:0.8;
+	}
+	</style>
+</head>
+
+<body>
+<h1>
+	RECTANGLE GAME
+</h1>
+	<button type="button" onclick="help();">Help</button>
+	<button type="button" onclick="easy();">Easy</button>
+	<button type="button" onclick="normal();">Normal</button>
+	<button type="button" onclick="difficult();">Difficult</button>
+
+	<h2>
+	LEVEL: <span id="lbllevel">Easy</span>
+	SCORE: <span id="lblscore">0</span>	
+	</h2>
+	
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	content="";
+	for (var i = 0; i <160; i++) {
+	content+= "<span class='block' id='b"+i+"'></span>";
+	};
+	$('#mainboard').html(content);
+	$('.block').click(function(event){clickboard(event.target.id.substring(1));});
+});	
+var pause=false;
+var Clock;
+var map;
+var count=0;
+var made=false;
+var color= ["#FFFFFF","#CF000F", "#D2527F", "#4183D7", "#87D37C"];
+var m1,m2,m3,m4,ph,pc;
+var score;
+var level=2;
+var speed=200;
+
+function easy()
+{
+	level=2;
+	speed=300;
+	$("#lbllevel").html("Easy");
+	start();
+}
+
+function normal()
+{
+	level=3;
+	speed=350;
+	$("#lbllevel").html("Normal");
+	start();
+}
+
+function difficult()
+{
+	level=4;
+	speed=400;
+	$("#lbllevel").html("Difficult");
+	start();
+}
+
+function clickboard(index){
+	if (checkpos(ph,index%10))
+	{
+		pc=index%10;
+		showcolor();
+		showbrick();	
+	}
+}
+
+function start()
+{
+	pause=false;
+	made=false;
+	
+	clearInterval(Clock);
+  Clock = setInterval(function(){ updateTime() }, speed);
+  map=[];
+  for (var i = 0; i < 16; i++) {
+  map[i]=[];
+  	for (var j =0; j <10; j++) {
+  		map[i][j]=0;
+  	};
+  };
+  score=0;
+  showcolor();
+  $('#lblscore').html(score);
+}
+
+function showcolor(){
+	for (var i = 0; i < 16; i++) {
+  	for (var j =0; j <10; j++) {
+  		$("#b"+(i*10+j)).css("background-color", color[map[i][j]]);
+  	};
+  };
+}
+
+function showbrick(h,c,c1,c2,c3,c4)
+{
+	$("#b"+(h*10+c)).css("background-color", color[c1]);
+	$("#b"+(h*10+c+1)).css("background-color", color[c2]);
+	$("#b"+(h*10+10+c)).css("background-color", color[c3]);
+	$("#b"+(h*10+10+c+1)).css("background-color", color[c4]);
+}
+function setbrick(h,c,c1,c2,c3,c4)
+{
+	map[h][c]=c1;
+	map[h][c+1]=c2;
+	map[h+1][c]=c3;
+	map[h+1][c+1]=c4;
+
+}
+
+function checkpos(h,c){
+	if (h>=15) return false;
+	if (c>=9) return false;
+	if (map[h][c]!=0) return false;
+	if (map[h][c+1]!=0) return false;
+	if (map[h+1][c]!=0) return false;
+	if (map[h+1][c+1]!=0) return false;
+	return true;
+}
+
+function gameover()
+{
+ 	clearInterval(Clock);
+ 	alert("GAME OVER! YOUR SCORE IS: "+ score);
+}
+
+function updateTime()
+{
+	if(pause) return;
+  if (made==false)
+  {
+  	made=true;
+  	if (checkpos(0,4))
+  	{
+  		m1=Math.floor((Math.random() * level) +1);
+  		m2=Math.floor((Math.random() * level) +1);
+  		m3=Math.floor((Math.random() * level) +1);
+  		m4=Math.floor((Math.random() * level) +1);
+  		ph=0;
+  		pc=4;
+  		showcolor();
+  		showbrick(0,4,m1,m2,m3,m4);
+  	}
+  	else
+  	{
+  		pause=true;
+  		gameover();
+  	}
+  }
+  else
+  {
+  	if (checkpos(ph+1,pc))
+  	{
+  		ph++;
+  		checkrect();
+  		showcolor();
+  		showbrick(ph,pc,m1,m2,m3,m4);
+  	}
+  	else
+  	{
+  		made=false;
+  		setbrick(ph,pc,m1,m2,m3,m4);
+  		checkrect();
+  		showcolor();
+  	}
+  }
+}
+
+$(document).keydown(function(e) {
+    switch(e.which) {
+        case 37: // left
+        if ((pc>0) && (checkpos(ph,pc-1)))
+        {
+        	pc--;
+        	showcolor();
+        	showbrick();
+        }
+        break;
+
+        case 38: // up
+        var temp=m1;
+        m1=m3;
+        m3=m4;
+        m4=m2;
+        m2=temp;
+        showbrick();
+        break;
+
+        case 39: // right
+        if ((pc<8) && (checkpos(ph,pc+1)))
+        {
+        	pc++;
+        	showcolor();
+        	showbrick();
+        }
+        break;
+
+        case 40: // down
+        var canph=0;
+        for (var i = ph; i <15; i++) {
+        	if(checkpos(i,pc)) {
+        		canph=i;
+        	}else{
+        		break;
+        	}
+        };
+        ph=canph;
+        showcolor();
+        showbrick();
+        break;
+
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+function checkrect()
+{
+	var mxet,x,y,dx,dy,dx1,dy1,dx2,dy2;
+	var ri=true;
+	var found=false;
+	var mar;
+
+	mar=[];
+  	for (var i = 0; i < 16; i++) {
+  	mar[i]=[];
+  	for (var j =0; j <10; j++) {
+  		mar[i][j]=0;
+  	};
+  	};
+
+	for (x = 0; x < 10; x++) {
+		for (y = 0; y < 16; y++) {
+		mxet=map[y][x];
+		if (mxet==0) continue;
+		for (dx=x+1; dx<10; dx++) if (map[y][dx]!=mxet) break;
+		for (dy=y+1; dy<16; dy++) if (map[dy][x]!=mxet) break;
+		if(dx-x<2) continue;
+		if(dy-y<2) continue;
+			for (dx1 = dx-1; dx1 >= x+1; dx1--) {
+				for (dy1 = dy-1; dy1 >=y+1; dy1--) {
+					ri=true;
+					for (var dy2=y; dy2<=dy1; dy2++) {
+						if (map[dy2][dx1]!=mxet) 
+						{
+							ri=false;
+							continue;
+						}
+					};
+					for (var dx2=x; dx2<=dx1; dx2++) {
+						if (map[dy1][dx2]!=mxet) 
+						{
+							ri=false;
+							continue;
+						}
+					};
+					if ((dx1-x>=1)&&(dy1-y>=1))
+					if (ri)
+					{
+					  	for (var i = y; i <= dy1; i++) {
+					  	for (var j = x; j <= dx1; j++) {
+					  		mar[i][j]=1;
+					  	};
+					  	};
+						found=true;
+					}
+				};
+			};
+		};
+	};
+
+	var cbrick=0;
+	for (var i = 0; i <16; i++) {
+	  	for (var j = 0; j <10; j++) {
+	  		if (mar[i][j]==1) {
+	  			map[i][j]=0;
+	  			cbrick++;
+	  		}
+	  	};
+	};
+
+	showcolor();
+	var stack=[];
+	var cstack=0;
+	for (var j = 0; j <10; j++) {
+		cstack=0;
+		for (var i = 0; i <16; i++) {
+	  		if (map[i][j]!=0) {
+	  			stack[cstack]=map[i][j];
+	  			cstack++;
+	  		}
+	  	};
+	  	if (cstack>0)
+	  	{
+	  		for (var i = 0; i < 16-cstack; i++) {
+	  			map[i][j]=0;
+	  		}
+	  		for (var i = 0; i < cstack; i++) {
+	  			map[i + 16 - cstack ][j]=stack[i];
+	  		}
+	  	}
+	};
+
+	score+=cbrick*cbrick;
+	$('#lblscore').html(score);
+}
+
+</script>
+	<div class="board">
+	<div class="board" id="help" style="line-height:140%;text-align:left;">
+		<script type="text/javascript">
+		function help()
+		{
+			$("#help").show();
+		}
+		function closehelp()
+		{
+			$("#help").hide();
+		}
+		</script>
+		<h1>Luật chơi</h1>
+		<h4>
+			- Xếp những viên gạch sao cho tạo thành 1 hình chữ nhật có viền "cùng 1 màu" là bạn ăn được tất cả viên gạch trong hình chữ nhật đó.
+			<br>- Sử dụng phím mũi tên trái/phải để dời viên gạch qua trái/phải.
+			<br>- Sử dụng phím lên để xoay viên gạch và phím xuống để tăng tốc rơi.
+			<br>- Chọn cấp độ game phù hợp để chơi.
+			<br>- Bấm "Close" phía dưới để đóng khung hướng dẫn lại.
+			<br><button type="button" onclick="closehelp();">Close</button>
+		</h4>
+		
+	</div>
+	<div class="board" id="mainboard">
+
+	</div>
+	</div>
+		Author: <a href="https://www.tranthehuy.wordpress.com" >Tran The Huy</a><br>
+</body>
+</html>
