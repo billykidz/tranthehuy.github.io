@@ -147,6 +147,7 @@ var MatchingGame;
         }
         clsPlay.prototype.create = function () {
             var tg = this.game;
+            this.currentscore = 0;
             var style = { font: "30px Arial", fill: "#ff0000", align: "center" };
             this.lbllevel = tg.add.text(this.game.world.centerX, 30, "Level: 1", style);
             this.lbllevel.anchor.set(0.5, 0.5);
