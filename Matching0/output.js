@@ -6,6 +6,138 @@ var __extends = this.__extends || function (d, b) {
 };
 var MatchingGame;
 (function (MatchingGame) {
+    var clsBoot = (function (_super) {
+        __extends(clsBoot, _super);
+        function clsBoot() {
+            _super.call(this);
+        }
+        clsBoot.prototype.preload = function () {
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+            this.scale.setScreenSize(true);
+            var tgl = this.game.load;
+            tgl.spritesheet('pngPlay', 'assets/PLAY.png', 300, 100);
+            tgl.spritesheet('pngRank', 'assets/RANK.png', 300, 100);
+            tgl.spritesheet('pngHelp', 'assets/HELP.png', 300, 100);
+            tgl.spritesheet('pngAbout', 'assets/ABOUT.png', 300, 100);
+            tgl.spritesheet('pngClose', 'assets/CLOSE.png', 300, 100);
+            tgl.spritesheet('pngAuthor', 'assets/AUTHOR.png', 400, 400);
+            tgl.spritesheet('pngRule', 'assets/RULE.png', 400, 600);
+            tgl.spritesheet('pngOk', 'assets/OK.png', 150, 150);
+            tgl.spritesheet('pngNo', 'assets/NO.png', 150, 150);
+            tgl.image("pngTitle", "assets/TITLE.png");
+            tgl.image("pngOver", "assets/OVER.png");
+            tgl.atlas('pngData', 'assets/data.png', 'assets/data.json');
+        };
+        clsBoot.prototype.playfoo = function () {
+        };
+        clsBoot.prototype.create = function () {
+            var tg = this.game;
+            tg.stage.backgroundColor = '#FFFFFF';
+            var btnPlay = tg.add.button(tg.world.centerX, tg.world.height - 350, 'pngPlay', this.fooPlay, this, 0, 0, 1, 0);
+            btnPlay.anchor.setTo(0.5, 0.5);
+            var btnRank = tg.add.button(tg.world.centerX, tg.world.height - 250, 'pngRank', this.fooRank, this, 0, 0, 1, 0);
+            btnRank.anchor.setTo(0.5, 0.5);
+            var btnHelp = tg.add.button(tg.world.centerX, tg.world.height - 150, 'pngHelp', this.fooHelp, this, 0, 0, 1, 0);
+            btnHelp.anchor.setTo(0.5, 0.5);
+            var btnAbout = tg.add.button(tg.world.centerX, tg.world.height - 50, 'pngAbout', this.fooAbout, this, 0, 0, 1, 0);
+            btnAbout.anchor.setTo(0.5, 0.5);
+            var lblTitle = this.game.add.sprite(tg.world.centerX, 70, 'pngTitle');
+            lblTitle.anchor.setTo(0.5, 0.5);
+        };
+        clsBoot.prototype.fooPlay = function () {
+            this.game.state.start('Play');
+        };
+        clsBoot.prototype.fooRank = function () {
+            this.game.state.start('Rank');
+        };
+        clsBoot.prototype.fooHelp = function () {
+            this.game.state.start('Help');
+        };
+        clsBoot.prototype.fooAbout = function () {
+            this.game.state.start('About');
+        };
+        return clsBoot;
+    })(Phaser.State);
+    MatchingGame.clsBoot = clsBoot;
+})(MatchingGame || (MatchingGame = {}));
+var MatchingGame;
+(function (MatchingGame) {
+    var clsAbout = (function (_super) {
+        __extends(clsAbout, _super);
+        function clsAbout() {
+            _super.call(this);
+        }
+        clsAbout.prototype.create = function () {
+            var tg = this.game;
+            tg.stage.backgroundColor = '#FFFFFF';
+            var btnAuthor = tg.add.button(tg.world.centerX, tg.world.centerY, 'pngAuthor', this.fooClose, this, 0, 0, 0, 0);
+            btnAuthor.anchor.setTo(0.5, 0.5);
+        };
+        clsAbout.prototype.fooClose = function () {
+            this.game.state.start("Boot");
+        };
+        return clsAbout;
+    })(Phaser.State);
+    MatchingGame.clsAbout = clsAbout;
+})(MatchingGame || (MatchingGame = {}));
+var MatchingGame;
+(function (MatchingGame) {
+    var clsHelp = (function (_super) {
+        __extends(clsHelp, _super);
+        function clsHelp() {
+            _super.call(this);
+        }
+        clsHelp.prototype.create = function () {
+            var tg = this.game;
+            tg.stage.backgroundColor = '#FFFFFF';
+            var btnRule = tg.add.button(tg.world.centerX, tg.world.centerY, 'pngRule', this.fooClose, this, 0, 0, 0, 0);
+            btnRule.anchor.setTo(0.5, 0.5);
+        };
+        clsHelp.prototype.fooClose = function () {
+            this.game.state.start("Boot");
+        };
+        return clsHelp;
+    })(Phaser.State);
+    MatchingGame.clsHelp = clsHelp;
+})(MatchingGame || (MatchingGame = {}));
+var MatchingGame;
+(function (MatchingGame) {
+    var Game = (function (_super) {
+        __extends(Game, _super);
+        function Game() {
+            var key = Game.keygamescore;
+            if (typeof (Storage) !== "undefined") {
+                if (localStorage.getItem(key)) {
+                }
+                else {
+                    localStorage.setItem(key, "0");
+                }
+            }
+            else {
+                alert("ERROR! Sorry for this error! So you can't play this game on this device!");
+                return;
+            }
+            _super.call(this, 400, 600, Phaser.CANVAS, "game");
+            var ts = this.state;
+            ts.add("Boot", MatchingGame.clsBoot);
+            ts.add("Play", MatchingGame.clsPlay);
+            ts.add("Rank", MatchingGame.clsRank);
+            ts.add("Help", MatchingGame.clsHelp);
+            ts.add("About", MatchingGame.clsAbout);
+            ts.start("Boot");
+        }
+        Game.keygamescore = "BestScoreMatchingGame1";
+        return Game;
+    })(Phaser.Game);
+    MatchingGame.Game = Game;
+})(MatchingGame || (MatchingGame = {}));
+window.onload = function () {
+    var game = new MatchingGame.Game();
+};
+var MatchingGame;
+(function (MatchingGame) {
     var clsPlay = (function (_super) {
         __extends(clsPlay, _super);
         function clsPlay() {
@@ -169,3 +301,33 @@ var MatchingGame;
     })(Phaser.State);
     MatchingGame.clsPlay = clsPlay;
 })(MatchingGame || (MatchingGame = {}));
+var MatchingGame;
+(function (MatchingGame) {
+    var clsRank = (function (_super) {
+        __extends(clsRank, _super);
+        function clsRank() {
+            _super.call(this);
+        }
+        clsRank.prototype.preload = function () {
+            var tgl = this.game.load;
+            tgl.spritesheet('pngClose', 'assets/CLOSE.png', 300, 100);
+        };
+        clsRank.prototype.create = function () {
+            var style = { font: "40px Arial", fill: "#ff0000", align: "center" };
+            var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 120, "Your best score", style);
+            text.anchor.set(0.5, 0.5);
+            style = { font: "60px Arial", fill: "#000000", align: "center" };
+            var score = localStorage.getItem(MatchingGame.Game.keygamescore);
+            var text2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 60, score, style);
+            text2.anchor.set(0.5, 0.5);
+            var btnClose = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 100, 'pngClose', this.fooClose, this, 0, 0, 1, 0);
+            btnClose.anchor.setTo(0.5, 0.5);
+        };
+        clsRank.prototype.fooClose = function () {
+            this.game.state.start("Boot");
+        };
+        return clsRank;
+    })(Phaser.State);
+    MatchingGame.clsRank = clsRank;
+})(MatchingGame || (MatchingGame = {}));
+//# sourceMappingURL=output.js.map
