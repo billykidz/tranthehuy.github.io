@@ -6,6 +6,60 @@ var __extends = this.__extends || function (d, b) {
 };
 var MatchingGame;
 (function (MatchingGame) {
+    var Game = (function (_super) {
+        __extends(Game, _super);
+        function Game() {
+            var key = Game.keygamescore;
+            if (typeof (Storage) !== "undefined") {
+                if (localStorage.getItem(key)) {
+                }
+                else {
+                    localStorage.setItem(key, "0");
+                }
+            }
+            else {
+                alert("ERROR! Sorry for this error! So you can't play this game on this device!");
+                return;
+            }
+            _super.call(this, 400, 600, Phaser.CANVAS, "game");
+            var ts = this.state;
+            ts.add("Boot", MatchingGame.clsBoot);
+            ts.add("Play", MatchingGame.clsPlay);
+            ts.add("Rank", MatchingGame.clsRank);
+            ts.add("Help", MatchingGame.clsHelp);
+            ts.add("About", MatchingGame.clsAbout);
+            ts.start("Boot");
+        }
+        Game.keygamescore = "BestScoreMatchingGame1";
+        return Game;
+    })(Phaser.Game);
+    MatchingGame.Game = Game;
+})(MatchingGame || (MatchingGame = {}));
+window.onload = function () {
+    var game = new MatchingGame.Game();
+};
+var MatchingGame;
+(function (MatchingGame) {
+    var clsAbout = (function (_super) {
+        __extends(clsAbout, _super);
+        function clsAbout() {
+            _super.call(this);
+        }
+        clsAbout.prototype.create = function () {
+            var tg = this.game;
+            tg.stage.backgroundColor = '#FFFFFF';
+            var btnAuthor = tg.add.button(tg.world.centerX, tg.world.centerY, 'pngAuthor', this.fooClose, this, 0, 0, 0, 0);
+            btnAuthor.anchor.setTo(0.5, 0.5);
+        };
+        clsAbout.prototype.fooClose = function () {
+            this.game.state.start("Boot");
+        };
+        return clsAbout;
+    })(Phaser.State);
+    MatchingGame.clsAbout = clsAbout;
+})(MatchingGame || (MatchingGame = {}));
+var MatchingGame;
+(function (MatchingGame) {
     var clsBoot = (function (_super) {
         __extends(clsBoot, _super);
         function clsBoot() {
@@ -64,26 +118,6 @@ var MatchingGame;
 })(MatchingGame || (MatchingGame = {}));
 var MatchingGame;
 (function (MatchingGame) {
-    var clsAbout = (function (_super) {
-        __extends(clsAbout, _super);
-        function clsAbout() {
-            _super.call(this);
-        }
-        clsAbout.prototype.create = function () {
-            var tg = this.game;
-            tg.stage.backgroundColor = '#FFFFFF';
-            var btnAuthor = tg.add.button(tg.world.centerX, tg.world.centerY, 'pngAuthor', this.fooClose, this, 0, 0, 0, 0);
-            btnAuthor.anchor.setTo(0.5, 0.5);
-        };
-        clsAbout.prototype.fooClose = function () {
-            this.game.state.start("Boot");
-        };
-        return clsAbout;
-    })(Phaser.State);
-    MatchingGame.clsAbout = clsAbout;
-})(MatchingGame || (MatchingGame = {}));
-var MatchingGame;
-(function (MatchingGame) {
     var clsHelp = (function (_super) {
         __extends(clsHelp, _super);
         function clsHelp() {
@@ -102,40 +136,6 @@ var MatchingGame;
     })(Phaser.State);
     MatchingGame.clsHelp = clsHelp;
 })(MatchingGame || (MatchingGame = {}));
-var MatchingGame;
-(function (MatchingGame) {
-    var Game = (function (_super) {
-        __extends(Game, _super);
-        function Game() {
-            var key = Game.keygamescore;
-            if (typeof (Storage) !== "undefined") {
-                if (localStorage.getItem(key)) {
-                }
-                else {
-                    localStorage.setItem(key, "0");
-                }
-            }
-            else {
-                alert("ERROR! Sorry for this error! So you can't play this game on this device!");
-                return;
-            }
-            _super.call(this, 400, 600, Phaser.CANVAS, "game");
-            var ts = this.state;
-            ts.add("Boot", MatchingGame.clsBoot);
-            ts.add("Play", MatchingGame.clsPlay);
-            ts.add("Rank", MatchingGame.clsRank);
-            ts.add("Help", MatchingGame.clsHelp);
-            ts.add("About", MatchingGame.clsAbout);
-            ts.start("Boot");
-        }
-        Game.keygamescore = "BestScoreMatchingGame1";
-        return Game;
-    })(Phaser.Game);
-    MatchingGame.Game = Game;
-})(MatchingGame || (MatchingGame = {}));
-window.onload = function () {
-    var game = new MatchingGame.Game();
-};
 var MatchingGame;
 (function (MatchingGame) {
     var clsPlay = (function (_super) {
@@ -219,7 +219,7 @@ var MatchingGame;
         clsPlay.prototype.makeLevel = function () {
             if (this.answer == 1) {
                 this.currentscore += this.countdownremain * 10;
-                this.countdowntime -= 30;
+                this.countdowntime -= 3;
                 this.level += 1;
                 this.lbllevel.setText("Level: " + this.level);
                 this.lblscore.setText("Score: " + this.currentscore);
@@ -229,11 +229,7 @@ var MatchingGame;
             this.lastupdate = this.game.time.time;
             this.answer = -1;
             var mya = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29];
-            var mya2 = [0, 1, 2, 3, 4];
             mya.sort(function () {
-                return .5 - Math.random();
-            });
-            mya2.sort(function () {
                 return .5 - Math.random();
             });
             this.h1.frame = mya[0];
@@ -243,6 +239,10 @@ var MatchingGame;
             this.h5.frame = mya[4];
             if (Math.floor((Math.random() * 2)) == 1) {
                 this.solution = 1;
+                var mya2 = [0, 1, 2, 3, 4];
+                mya2.sort(function () {
+                    return .5 - Math.random();
+                });
                 this.h6.frame = mya[mya2[0]];
                 this.h7.frame = mya[mya2[1]];
                 this.h8.frame = mya[mya2[2]];
@@ -251,11 +251,15 @@ var MatchingGame;
             }
             else {
                 this.solution = 0;
+                var mya2 = [0, 1, 2, 3, 4, 5, 6];
+                mya2.sort(function () {
+                    return .5 - Math.random();
+                });
                 this.h6.frame = mya[mya2[0]];
                 this.h7.frame = mya[mya2[1]];
                 this.h8.frame = mya[mya2[2]];
                 this.h9.frame = mya[mya2[3]];
-                this.h10.frame = mya[5];
+                this.h10.frame = mya[mya2[4]];
             }
         };
         clsPlay.prototype.fooOk = function () {
