@@ -219,7 +219,7 @@ var MatchingGame;
         clsPlay.prototype.makeLevel = function () {
             if (this.answer == 1) {
                 this.currentscore += this.countdownremain * 10;
-                this.countdowntime -= 3;
+                this.countdowntime -= 30;
                 this.level += 1;
                 this.lbllevel.setText("Level: " + this.level);
                 this.lblscore.setText("Score: " + this.currentscore);
