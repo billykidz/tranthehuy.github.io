@@ -232,11 +232,15 @@ var MatchingGame;
             mya.sort(function () {
                 return .5 - Math.random();
             });
-            this.h1.frame = mya[0];
-            this.h2.frame = mya[1];
-            this.h3.frame = mya[2];
-            this.h4.frame = mya[3];
-            this.h5.frame = mya[4];
+            var mya2 = [0, 1, 2, 3, 4];
+            mya2.sort(function () {
+                return .5 - Math.random();
+            });
+            this.h1.frame = mya[mya2[0]];
+            this.h2.frame = mya[mya2[1]];
+            this.h3.frame = mya[mya2[2]];
+            this.h4.frame = mya[mya2[3]];
+            this.h5.frame = mya[mya2[4]];
             if (Math.floor((Math.random() * 2)) == 1) {
                 this.solution = 1;
                 var mya2 = [0, 1, 2, 3, 4];
@@ -251,7 +255,7 @@ var MatchingGame;
             }
             else {
                 this.solution = 0;
-                var mya2 = [0, 1, 2, 3, 4, 5, 6];
+                var mya2 = [1, 2, 3, 4, 5];
                 mya2.sort(function () {
                     return .5 - Math.random();
                 });
