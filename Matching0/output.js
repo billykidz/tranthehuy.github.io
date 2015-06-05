@@ -30,7 +30,7 @@ var MatchingGame;
             ts.add("About", MatchingGame.clsAbout);
             ts.start("Boot");
         }
-        Game.keygamescore = "BestScoreMatchingGame2";
+        Game.keygamescore = "BestScoreMatchingGame1";
         return Game;
     })(Phaser.Game);
     MatchingGame.Game = Game;
@@ -286,18 +286,10 @@ var MatchingGame;
             this.countdown = false;
             this.btnOk.kill();
             this.btnNo.kill();
-            this.h1.kill();
-            this.h2.kill();
-            this.h3.kill();
-            this.h4.kill();
-            this.h5.kill();
-            this.h6.kill();
-            this.h7.kill();
-            this.h8.kill();
-            this.h9.kill();
-            this.h10.kill();
             this.btnClose.reset(this.game.world.centerX, this.game.world.height - 95);
             this.lblOver.reset(this.game.world.centerX, this.game.world.centerY);
+            this.lblOver.alpha = 0.8;
+            this.lblOver.bringToTop();
             if (this.currentscore > localStorage.getItem(MatchingGame.Game.keygamescore)) {
                 localStorage.setItem(MatchingGame.Game.keygamescore, this.currentscore.toString());
             }
