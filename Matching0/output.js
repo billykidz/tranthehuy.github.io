@@ -30,7 +30,7 @@ var MatchingGame;
             ts.add("About", MatchingGame.clsAbout);
             ts.start("Boot");
         }
-        Game.keygamescore = "BestScoreMatchingGame1";
+        Game.keygamescore = "BestScoreMatchingGame2";
         return Game;
     })(Phaser.Game);
     MatchingGame.Game = Game;
