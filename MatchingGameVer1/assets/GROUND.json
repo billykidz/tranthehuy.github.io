@@ -1,0 +1,52 @@
+{"frames": [
+
+{
+	"filename": "GROUND.jpg",
+	"frame": {"x":2,"y":2,"w":400,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":600},
+	"sourceSize": {"w":400,"h":600}
+},
+{
+	"filename": "GROUND2.jpg",
+	"frame": {"x":404,"y":2,"w":400,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":600},
+	"sourceSize": {"w":400,"h":600}
+},
+{
+	"filename": "GROUND3.jpg",
+	"frame": {"x":806,"y":2,"w":400,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":600},
+	"sourceSize": {"w":400,"h":600}
+},
+{
+	"filename": "GROUND4.jpg",
+	"frame": {"x":1208,"y":2,"w":400,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":600},
+	"sourceSize": {"w":400,"h":600}
+},
+{
+	"filename": "GROUND5.jpg",
+	"frame": {"x":1610,"y":2,"w":400,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":600},
+	"sourceSize": {"w":400,"h":600}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "GROUND.jpg",
+	"format": "RGB888",
+	"size": {"w":2012,"h":604},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:740267f25ce3a697baed3d1fb590af3a:0cfcead4141a1ae20c1f42660446f8a8:0ac8b36c96274a1c9ed2756f07b0b296$"
+}
+}
