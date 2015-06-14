@@ -1,0 +1,162 @@
+<html>
+<body>
+<pre>
+php yii init
+0 for developer
+change db in common config main-local.php
+mirgate make db, to have user table
+sign up to make an account
+
+FrONTENT
+change signup frontend
+insert column in db
+insert property in model
+add rules for property
+add params in signup function
+add textbox in signup form frontent
+*FUNCTIONAL: ['namefield','required','message']
+
+Backend
+table with relation
+table type: enum('active','inactive')
+date('format')
+Y-m-d h:m:s
+company_id -> brand_id, department_id
+brand_id->department_id
+*make model in backend model path
+sudo chmod 777 -R folder/
+___SHOW A TABLE: REPLACE ID BY DATA OF THIS ID
+*Show relation name follow id: table_related.column_name in grid_view<that_model<view<backendINPUT A 
+
+___RECORD: REPLACE ID BY DROPDOWN DATA FOR SET OF THIS ID
+<?= $form->field($model,'name_this_column')->dropDownList
+(
+	ArrayHelper::map(  table_related ::find->all() , 'column_value', 'column_name_of_val'),
+	['prompt'=>'text for none choose']
+)
+?>
+
+___SEARCH RELATED COLUMN by Text:
+in search view form(index view)
+add column to find:
+[
+'attribute'=>'column_key',
+'value'=>'table.column_refer'
+]
+enter to model RULES of this view:
+remove refer index column
+and add column id here 
+Sumary: value -> attribute -> RULE to find
+In search model: $query->joinWith('table');
+addFilter.... table.column_name
+
+
+Make modules in backend
+add module setting in app config
+make table
+make model, namespace for this mudule
+add crud for this model in this module
+
+Add Yii2 date picker widget
+inser into view
+add use \\\;
+
+Yii2 widget select 2
+
+Add search date:
+into search view index
+add new column
+attribute: column name
+value: column name
+format: 'raw'
+filter: DatePicker::widget([])
+
+Add ajax form view:
+use yii\widget\Pjax;
+<? Pjax::begin(); ?>
+<? Pjax::end(); ?>
+
+Upload file:
+rule:
+[['file'],'file']
+view: enctype: multipart/form-data
+<? $form->field($model,'$file')->fileInput() ?>
+model: attribute label
+'file' => 'logo'
+controller: create action
+$imgname=$model->company_name;
+$model->file = UploadedFile::getInstance($model,'file');
+$model->file->saveAd('upload/'.$imgname.$model->file->extension);
+$model->logo=...path
+*use yii\web\uploadedfile
+*chmod folder
+
+Component: authManager
+http://www.yiiframework.com/doc-2.0/guide-security-authorization.html
+insert in controller if(Yii::$app->user->can('something')){doing here}
+else
+{
+throw new ForbiddenHttpException;
+}
+
+Dependent dropboxs
+backend/view/form
+use yii\helper\ArrayHelper;
+use backend\models\TABLE;
+->dropDownList(
+ArrayHelper::map(table::find()->all(),'id','name'),
+[
+'prompt'=>'none',
+'onChange'=>'code js'
+]
+);
+*___ $post('?r='+$this.val(),function(data){....});
+actionList($id)
+Model::find()->where([column=>$id])->count();
+Model::find()->where([column=>$id])->all();
+foreach(s as nots)
+echo nots->st
+
+Email:controller:
+$value=Yii::$app->mailer->compose)_
+->setFrom('email@','name')
+->setTo('email')
+->setSubject()
+->setHtmlBody()
+->attach()
+->send();
+use yii\web\UploadFile
+use yii\web\
+view:
+ActiveForm::begin([options=>['enctype'=>'multipart/form-data']]);
+'mailer'=>[
+'class'=>'yii\swiftmailer\Mailer',
+'useFileTransport'=>false,
+]
+
+Add ClASS to row
+'rowOptions'=>function($model){
+return ['class'=>'status']
+}
+
+Add js to main
+Asset.php
+modal('show).find('#id).load('url)
+this.attr('value
+<?= Html::button('text',[attr]);
+actionCreate: renderAjax
+
+Rule: use function
+form:
+enableAjaxValidation=>true
+date('format Y-m-d')
+date>$today
+
+double form in a page :v
+
+yii2-dynamicform
+
+
+</pre>
+</body>
+</html>
