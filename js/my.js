@@ -9,6 +9,8 @@ app.config(function ($routeProvider){
 
 app.controller('MainCtrl',function($scope){
 	
-	$scope.title='Hello world';
+	$scope.title='13 cards game';
+	$scope.start='Start now!';
+	$scope.footer='Johnny Chen copyright 2015';
 
 });
