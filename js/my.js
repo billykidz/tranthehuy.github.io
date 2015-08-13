@@ -11,6 +11,7 @@ app.controller('MainCtrl',function($scope){
 	
 	$scope.title='13 CARDS GAME';
 	$scope.start='Start now!';
+	$scope.about='About me ^^';
 	$scope.footer='Johnny Chen copyright 2015';
 
 });
