@@ -1,4 +1,4 @@
-var app=angular.module('myapp',['ngRoute']);
+var app=angular.module('myapp',['ngRoute','ngAnimate']);
 app.config(function ($routeProvider){
 	$routeProvider
       .when('/', {
@@ -21,12 +21,13 @@ app.controller('MainCtrl',function($scope){
 	$scope.start='Start now!';
 	$scope.about='About me ^^';
 	$scope.footer='Johnny Chen copyright 2015';
+  $scope.pageClass = 'page-main';
 });
 
 app.controller('BoardCtrl',function($scope){
-
+  $scope.pageClass = 'page-board';
 });
 
 app.controller('AboutCtrl',function($scope){
-
+  $scope.pageClass = 'page-about';
 });
