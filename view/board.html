@@ -1,5 +1,28 @@
-<a href="#/">
-<div class='btn-about'>
-BACK
-</div>
-</a>
+<table class="table-layout">
+<tbody>
+<tr>
+	<td>
+		<a href="#/">
+			<div class='btn-about'>
+				X
+			</div>
+		</a>
+	</td>
+</tr>
+<tr class='page-red'>
+	<td>
+
+	</td>
+</tr>
+<tr class='page-green'>
+	<td>
+
+	</td>
+</tr>
+<tr class='page-blue'>
+	<td>
+		<div class='card card-{{card.type}}-{{card.volume}}' ng-repeat='card in userCards'></div>
+	</td>
+</tr>
+</tbody>
+</table>

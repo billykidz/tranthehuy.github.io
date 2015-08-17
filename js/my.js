@@ -1,4 +1,5 @@
 var app=angular.module('myapp',['ngRoute','ngAnimate']);
+
 app.config(function ($routeProvider){
 	$routeProvider
       .when('/', {
@@ -26,6 +27,60 @@ app.controller('MainCtrl',function($scope){
 
 app.controller('BoardCtrl',function($scope){
   $scope.pageClass = 'page-board';
+  $scope.userCards = [
+    {
+      'type':'heart',
+      'volume':'1',
+    },
+    {
+      'type':'heart',
+      'volume':'2',
+    },
+    {
+      'type':'heart',
+      'volume':'3',
+    },
+    {
+      'type':'heart',
+      'volume':'4',
+    },
+    {
+      'type':'heart',
+      'volume':'5',
+    },
+    {
+      'type':'heart',
+      'volume':'6',
+    },
+    {
+      'type':'heart',
+      'volume':'7',
+    },
+    {
+      'type':'heart',
+      'volume':'8',
+    },
+    {
+      'type':'heart',
+      'volume':'9',
+    },
+    {
+      'type':'heart',
+      'volume':'10',
+    },
+    {
+      'type':'heart',
+      'volume':'11',
+    },
+    {
+      'type':'heart',
+      'volume':'12',
+    },
+    {
+      'type':'heart',
+      'volume':'13',
+    },
+  ];
 });
 
 app.controller('AboutCtrl',function($scope){
